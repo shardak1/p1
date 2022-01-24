@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .models import Student
 from .serializers import StudentSerializer
 from rest_framework import status
+from django.http import HttpResponse
+import requests
 # Create your views here.
 
 class StudentAPI(APIView):
@@ -48,3 +50,6 @@ def Delete(self, request, pk , format=None):
     stu = Student.objects.get(pk=id)
     stu.delete()
     return Response({'msg':'Data De;eted'})
+def home(request):
+    response = requests.get('http://127.0.0.1:8000/studentapi/').json()
+    return render(request,'home.html', {'response':response})
